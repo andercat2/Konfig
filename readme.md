@@ -14,6 +14,7 @@
 3. **Бинарный файл** (например, `binary.bin`): файл, содержащий скомпилированные команды УВМ.
 4. **Файл лога** (например, `log.csv`): файл, содержащий ассемблированные инструкции для отладки.
 5. **Файл результатов** (например, `output.csv`): файл, содержащий значения памяти после выполнения.
+6. **`uvm_tests.py`**: модуль с тестами для проверки работы ассемблера и интерпретатора.
 
 ---
 
@@ -66,6 +67,93 @@ WRITE_MEMORY       # Сохраняем результат в памяти
 
 ## Тестирование
 
+### Покрытие тестов
+
+Тесты покрывают основные операции УВМ и проверяют корректность выполнения команд. Пример запуска тестов:
+```bash
+python -m unittest uvm_tests.py
+```
+Вывод успешного выполнения тестов:
+```
+Executing opcode: 16, PC: 0
+Stack state: []
+Executing opcode: 16, PC: 5
+Stack state: [10]
+Executing opcode: 30, PC: 10
+Stack state: [10, 20]
+Computed max(20, 10) = 20
+Executing opcode: 16, PC: 13
+Stack state: [20]
+Executing opcode: 99, PC: 18
+Stack state: [20, 0]
+Writing value 20 to memory address 0
+Memory state (first 10): [20, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+.
+Executing opcode: 16, PC: 0
+Stack state: []
+Executing opcode: 16, PC: 5
+Stack state: [100]
+Executing opcode: 99, PC: 10
+Stack state: [100, 0]
+Writing value 100 to memory address 0
+Memory state (first 10): [100, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Executing opcode: 16, PC: 11
+Stack state: []
+Executing opcode: 25, PC: 16
+Stack state: [0]
+Executing opcode: 16, PC: 19
+Stack state: [100]
+Executing opcode: 99, PC: 24
+Stack state: [100, 0]
+Writing value 100 to memory address 0
+Memory state (first 10): [100, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+.
+Executing opcode: 16, PC: 0
+Stack state: []
+Executing opcode: 16, PC: 5
+Stack state: [15]
+Executing opcode: 30, PC: 10
+Stack state: [15, 25]
+Computed max(25, 15) = 25
+Executing opcode: 16, PC: 13
+Stack state: [25]
+Executing opcode: 99, PC: 18
+Stack state: [25, 0]
+Writing value 25 to memory address 0
+Memory state (first 10): [25, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Executing opcode: 16, PC: 19
+Stack state: []
+Executing opcode: 16, PC: 24
+Stack state: [30]
+Executing opcode: 30, PC: 29
+Stack state: [30, 10]
+Computed max(10, 30) = 30
+Executing opcode: 16, PC: 32
+Stack state: [30]
+Executing opcode: 99, PC: 37
+Stack state: [30, 1]
+Writing value 30 to memory address 1
+Memory state (first 10): [25, 30, 0, 0, 0, 0, 0, 0, 0, 0]
+Executing opcode: 16, PC: 38
+Stack state: []
+Executing opcode: 16, PC: 43
+Stack state: [50]
+Executing opcode: 30, PC: 48
+Stack state: [50, 40]
+Computed max(40, 50) = 50
+Executing opcode: 16, PC: 51
+Stack state: [50]
+Executing opcode: 99, PC: 56
+Stack state: [50, 2]
+Writing value 50 to memory address 2
+Memory state (first 10): [25, 30, 50, 0, 0, 0, 0, 0, 0, 0]
+.
+----------------------------------------------------------------------
+Ran 3 tests in 0.016s
+
+OK
+```
+
 ### Пример 1: Вычисление max
 
 Входной файл:
@@ -107,4 +195,3 @@ Address,Value
 ## Контакты
 
 Если у вас есть вопросы или предложения, создайте issue в репозитории или свяжитесь со мной напрямую. Удачного кодинга!
-
